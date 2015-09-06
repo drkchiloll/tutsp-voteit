@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     port = process.env.port || 3031;
 
 gulp.task('browserify', function() {
-  gulp.src('./app/src/js/components/main.js')
+  gulp.src('./app/src/js/main.js')
     .pipe(browserify({ transform : 'reactify' }))
     .pipe(gulp.dest('./app/dist/js'));
 });
@@ -21,7 +21,7 @@ gulp.task('open', function() {
 
 gulp.task('connect', function() {
   connect.server({
-    root : 'app',
+    root : ['app'],
     port : port,
     livereload : true
   });
@@ -37,9 +37,15 @@ gulp.task('html', function() {
     .pipe(connect.reload());
 });
 
+gulp.task('styles', function() {
+  gulp.src('./app/src/styles/lib/*.css')
+    .pipe(connect.reload());
+})
+
 gulp.task('watch', function() {
   gulp.watch('app/dist/js/*.js', ['js']);
   gulp.watch('app/index.html', ['html']);
+  gulp.watch('app/src/styles/lib/*.css', ['styles']);
   gulp.watch('app/src/js/**/*.js', ['browserify']);
 });
 
