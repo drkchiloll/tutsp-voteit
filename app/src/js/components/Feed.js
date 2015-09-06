@@ -13,17 +13,30 @@ var Feed = module.exports = React.createClass({
       {key : '3', title : 'Coffee makes you awake', description : 'Drink responsibly', voteCount : 15}
     ];
     return {
-      items : FEED_ITEMS
+      items : FEED_ITEMS,
+      formDisplayed : false
     };
+  },
+  onToggleForm : function() {
+    this.setState({
+      formDisplayed : !this.state.formDisplayed
+    })
+  },
+  onNewItem : function(newItem) {
+    var newItems = this.state.items.concat([newItem]);
+    this.setState({
+      items : newItems,
+      formDisplayed : false
+    });
   },
   render : function() {
     return (
       <div>
         <div className='container'>
-          <ShowAddButton/>
+          <ShowAddButton displayed={this.state.formDisplayed} onToggleForm={this.onToggleForm}/>
         </div>
 
-        <FeedForm/>
+        <FeedForm displayed={this.state.formDisplayed} onNewItem={this.onNewItem}/>
 
         <br/>
         <br/>
