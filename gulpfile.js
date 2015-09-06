@@ -7,16 +7,16 @@ var gulp = require('gulp'),
 
 gulp.task('browserify', function() {
   gulp.src('./app/src/js/components/main.js')
-    .pipe(browserify({ transform : reactify }))
+    .pipe(browserify({ transform : 'reactify' }))
     .pipe(gulp.dest('./app/dist/js'));
 });
 
 gulp.task('open', function() {
   var options = {
-    url : 'http://localhost:' + port,
+    uri : 'http://localhost:' + port
   };
   gulp.src('./app/index.html')
-    .pipe(open('', options));
+    .pipe(open(options));
 });
 
 gulp.task('connect', function() {
