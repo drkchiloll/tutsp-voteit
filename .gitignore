@@ -1,4 +1,4 @@
 .DS_Store
 Thumbs.db
 node_modules
-dist/js/app.js
+app/dist/js/app.js
