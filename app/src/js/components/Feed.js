@@ -3,7 +3,8 @@
 var React = require('react'),
     ShowAddButton = require('./ShowAddButton'),
     FeedForm = require('./FeedForm'),
-    FeedList = require('./FeedList');
+    FeedList = require('./FeedList'),
+    _ = require('lodash');
 
 var Feed = module.exports = React.createClass({
   getInitialState : function() {
@@ -26,7 +27,21 @@ var Feed = module.exports = React.createClass({
     var newItems = this.state.items.concat([newItem]);
     this.setState({
       items : newItems,
-      formDisplayed : false
+      formDisplayed : false,
+      key : this.state.items.length
+    });
+  },
+  onVote : function(item) {
+    // console.log(item);
+    var items = _.uniq(this.state.items);
+    var index = _.findIndex(items, function(feedItems) {
+      return feedItems.key === item.key;
+    });
+    var oldObj = items[index];
+    var newItems = _.pull(items, oldObj);
+    newItems.push(item);
+    this.setState({
+      items : newItems
     });
   },
   render : function() {
@@ -41,7 +56,7 @@ var Feed = module.exports = React.createClass({
         <br/>
         <br/>
         <div className='container'>
-          <FeedList items={this.state.items}/>
+          <FeedList items={this.state.items} onVote={this.onVote}/>
         </div>
       </div>
     );

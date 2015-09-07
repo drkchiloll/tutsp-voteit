@@ -11,7 +11,7 @@ var FeedForm = module.exports = React.createClass({
       description : this.refs.desc.getDOMNode().value,
       voteCount : 0
     };
-    console.log(newItem);
+    // console.log(newItem);
     this.refs.feedForm.getDOMNode().reset();
 
     this.props.onNewItem(newItem);
